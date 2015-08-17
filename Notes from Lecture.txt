@@ -1,0 +1,105 @@
+Talkin' bout HTTP. 
+
+Mini sprint on HTTP. 
+
+When you write to servers you need to understand how servers work. 
+
+Client <==> Server. 
+
+Each of these is some kind of program that are running.  They don't need to be on different computers, they just need to be running somewhere. 
+
+The client will send requests, and the server is always waiting, listening and responding to requests. 
+
+* Your web browser is the most common HTTP client. 
+* Perl is command line tool where you can make HTTP requests. 
+* Postman is another client which lives in the browser but it's it's own program(almost) which can make HTTP requests. 
+* Ajax is also within the browser, but it is Javascript making HTTP requests. 
+* You can also have any kind of programming language has a way to make HTTP requests. 
+
+Servers
+
+* Most common servers are web apps - Facebook, Google - all the things that live on the internet. 
+* Node.js is an example of a server. 
+* An API is another example of a server. 
+
+All of these servers are going to be running somewhere, listening, and recieving a request.  Which it gets that request, it will send a response. 
+
+In HTTP:
+
+The client sends a request to the server.
+The server always sends back a response. 
+
+There are two main parts to HTTP:
+
+Method & URL (aka path)
+
+These two put together are the identification of what you're trying to do. These two put together are an action that you're telling the server what to do. 
+
+For example:
+
+GET /chats
+POST /chats
+
+It's the method and the path put together that creates the actions. /GET chats and POST /chats are completely different. These are two "end points".
+
+You can only make one end point per request. 
+
+For GET we're usually retrieving data. We're asking for the data at X url. GET should never change anything, all it does is retrieve data. 
+
+POST - the intent of POST is to create data. We request to the server to please create this item. 
+
+Post requests have something called a request body. 
+
+A request body is additional data that you're sending to the server.  With a post request, this is usually the data we want to create.  
+
+Get requests usually don't have request bodies. 
+
+-----------------------
+
+GET /chats
+
+The server will build up a response and send back some data.  This day might look like JSON [{"id":"10", "Message": "hi"}, {"id":"11", "message": "hello"}]
+
+This data that we get from the server will be contained in the response body.  
+
+The client will then take the JSON and parse it from that response body. 
+
+------------------------ 
+
+Everything about HTTP is plain text.  It's all text being sent over the wire (hence the need for JSON). 
+
+------------------------
+
+Postman is an HTTP client. It makes it easy to craft your HTTP requests, and very useful for trying out things such as APIs.  This is the main part - this is where we enter in our end point.  We specify our method. There are many but we are only interested in GET and POST.  We then enter our URL. 
+
+GET chat.api.mks.io
+
+If I send this get request, this is a GET to root (/).  This is a root endpoint
+
+You can see the raw requests in postman. It's all a bunch of text.  We're just sending a bunch of text to the server, and it will look for certain things inside the text and that's how it knows what to do. 
+
+-------------------------
+
+POST chat.api.mks.io/chats
+
+Post requests need a message body.  Such as {'message': 'hello'}.  The HTTP request data has a message body in the case of POST. It is all just sent text. 
+
+There's an empty line, and everything after that is the request body.  
+
+---------------------------
+
+Server response - if we look on raw, we see the server sends us a status. (such as 200 OK).  It will tell you (generally) what happened on the server side. 4xx means you did something wrong. 5xx means the server did something wrong. 
+
+---------------------------
+
+A response is going to look like a request.  The response will look exactly like this - headers, then an empty line - then a response body. Probably the most important is content-type.  Everything is text, so if we want to use JSON, we must use JSON parse. But we might not know it's JSON, so we need to look at the content type to tell the client what type of data is in the response body (JSON vs. text, HTML vs. text); 
+
+----------------------------
+
+As a server you're going to be using the requests and going to be sending requests.  You'll be working with post requests too, so you'll look at request bodies. 
+
+Minisprint to warm up. 
+
+
+
+
