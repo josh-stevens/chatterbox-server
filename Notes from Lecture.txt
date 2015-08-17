@@ -100,6 +100,108 @@ As a server you're going to be using the requests and going to be sending reques
 
 Minisprint to warm up. 
 
+---------------------------
+
+NODE.JS
+
+Node.js is a javascript runtime. The browser has a javascript runtime, specifically Chrome's javascript runtime is called V8. This is the reason we can run Javascript in the browser whenever we type in the console or use <script> tags. 
+
+In the past, the browser was the only environment where you could run javascript, but now we have Node.JS - a way to run javascript outside of the browser. We can run it as if we were in a browser console. 
+
+Node.js is built on top of V8.  
+
+Node has a lot of built in libraries, like HTTP and websockets that help you do things. 
+
+We'll be using Node to build an HTTP server that will access the filesystem. 
+
+--------------------------
+
+The basics of node: Running files, requiring files, and using NPM. 
+
+Start by creating a blank folder. I'm going to create a file called "my-file.js"
+
+---
+my-file.js
+---
+    console.log("hello");
+---
+
+node my-file.js // ==> hello
+
+-------------------
+
+Node.js doesn't have html, and doesn't have a dom and doesn't have script tags.  We use "Require"
+
+---
+   require('./vendor/jquery.js')  ===  <script.src="vendor/jquery.js" /> 
+---
+
+If I try to require something that exist, it'll throw an error. 
+
+Obviously you can only require files that exist. Requiring it by itself is not very useful, we want helpers and use them in this file. 
+
+---
+my-file.js
+--- 
+	var helpers = require('./lib/helpers.js')
+	console.log( helpers.shout("hello"));
+
+---
+helpers.js
+---
+	exports.shout = function (str) {
+		return str.toUpperCase(); 
+	}
+---
+
+node my-file.js // ==> HELLO
+
+Each file is it's own scope in node.  When you require this file, you obtain the exports object which is part of every "require"d file. Whatever you attach to exports will be available to other files. 
 
 
 
+---
+my-file.js
+--- 
+	var helpers = require('./lib/helpers.js')
+	console.log( helpers.exclaim(helpers.shout("hello")));
+
+---
+helpers.js
+---
+	exports.shout = function (str) {
+		return str.toUpperCase(); 
+	};
+
+	exports.exclaim = function(str){
+		return str + '!';
+	}
+---
+node my-file.js // ==> HELLO!
+
+
+---------------------------------
+
+Requiring third party libraries:
+
+NPM is a node package manager, and an easy way to use libraries that you did not write yourself. 
+
+Creating a new project, do "npm init" which will write out a JSON file, it uses that file to manage your dependencies.  
+
+"npm install underscore --save" (it will modify that json to record that you need underscore as a dependency.)
+
+It will install those to the node_modules folder.  You can now use thes files in your node-code.
+
+---
+my-file.js
+--- 
+	var helpers = require('./lib/helpers.js')
+	var _ = require('underscore') // notice there is no ./ -- that's for local files. 
+	                              // NPM packages don't need these/can't use these. 
+	console.log( helpers.exclaim(helpers.shout("hello")));
+
+---
+
+to get dependencies: If you have them listed (which is a common case when sharing code with team members, because you commit package.json but not your node modules folder)
+
+All you have to do is run "npm install" and all the dependencies will be installed. 
